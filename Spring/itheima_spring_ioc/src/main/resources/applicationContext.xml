@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+<!--    <bean id="userDao" class="com.itheima.dao.impl.UserDaoImpl" init-method="init" destroy-method="destory"></bean>-->
+<!--    <bean id="userDao" class="com.itheima.factory.StaticFactory" factory-method="getUserDao"></bean>-->
+
+    <bean id="user1" class="com.itheima.domain.User">
+        <property name="name" value="拓跋焘"></property>
+        <property name="addr" value="平城"></property>
+    </bean>
+    <bean id="user2" class="com.itheima.domain.User">
+        <property name="name" value="刘义隆"></property>
+        <property name="addr" value="江陵"></property>
+    </bean>
+
+
+    <bean id="userDao" class="com.itheima.dao.impl.UserDaoImpl">
+        <property name="username" value="芦纯静"></property>
+        <property name="age" value="23"></property>
+        <property name="strList">
+            <list>
+                <value>aaa</value>
+                <value>bbb</value>
+            </list>
+        </property>
+        <property name="userMap">
+            <map>
+                <entry key="user1" value-ref="user1"></entry>
+                <entry key="user2" value-ref="user2"></entry>
+            </map>
+        </property>
+        <property name="properties">
+            <props>
+                <prop key="p1">徐羡之</prop>
+                <prop key="p2">谢晦</prop>
+                <prop key="p3">檀道济</prop>
+            </props>
+        </property>
+    </bean>
+
+
+    <bean id="userService" class="com.itheima.service.impl.UserServiceImpl">
+        <constructor-arg name="userDao" ref="userDao"></constructor-arg>
+    </bean>
+
+    <context:component-scan base-package="com.itheima"/>
+
+    <import resource="applicationContext-user.xml"/>
+    <import resource="applicationContext-product.xml"/>
+
+</beans>
